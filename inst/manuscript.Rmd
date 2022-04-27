@@ -1,0 +1,52 @@
+---
+#title: ""
+#author: ""
+output: 
+  bookdown::word_document2:
+    reference_docx: template/word_template.docx
+    number_sections: false
+bibliography: [references/packages.bib, references/from-zotero.bib]
+csl: template/abnt.csl
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+# Load the package
+devtools::load_all()
+```
+
+```{r}
+# sti_uni <- readr::read_rds("analises/resultados/sti_uni_tabela_arrumada.Rds")
+```
+
+
+# Spatio-temporal variability of water quality in Billings Reservoir Central Body - São Paulo, Brazil
+
+**ABSTRACT**:
+
+The Billings reservoir is an important water body for public supply of the Metropolitan Region of São Paulo, Brazil, and water captation for public supply is located in the Rio Grande environmental compartment. 
+This article aims to evaluate water quality of the environmental compartment Central Body I of the Billings reservoir, which receives the reversed waters from the polluted Pinheiros river, at four sampling points with different contributions from the surroundings, seeking to verify the influence of seasonality on the results obtained and whether there was a difference in water quality between sampling points.
+Water sampling was carried out on the surface at four points, in a longitudinal profile, covering two periods (dry and rainy) distributed in six samplings, between 2016 and 2019.
+Analyzed variables included temperature, dissolved oxygen, pH, electrical conductivity, chlorophyll-a and nutrients (phosphorus and nitrogen). Space-Time Interaction tests revealed that physicochemical variables did not vary due to the interaction between sampling periods and points, but several variables varied significantly in function of the sampling period. Result of the Trophic State Index showed that waters of Central Body I were classified as Hypereutrophic, highlighting the degradation of water quality in this compartment. The results of this research can subsidize public managers in an attempt to minimize the effects of progressive degradation of water quality of this reservoir.
+
+**KEYWORDS**: Eutrophication, Pinheiros river, Urban Reservoir.
+
+**Variabilidade espaço-temporal da qualidade da água superficial do Corpo Central I da represa Billings - São Paulo, Brasil**
+
+**RESUMO**:
+
+A represa Billings é um reservatório importante para o abastecimento público da região metropolitana de São Paulo, no Brasil, e a captação de água para abastecimento público está localizada no compartimento ambiental Rio Grande.
+Este artigo tem como objetivo avaliar a qualidade das águas do compartimento ambiental Corpo Central I da represa Billings, que recebe as águas revertidas do poluído rio Pinheiros, em quatro pontos de coleta com contribuição do entorno diferenciada, buscando verificar a influência da sazonalidade nos resultados obtidos e se houve diferença da qualidade da água entre os pontos de coleta.
+As coletas de água foram realizadas na superfície em quatro pontos, em um perfil longitudinal, contemplando dois períodos (estiagem e chuvoso) distribuídos em seis coletas, entre os anos de 2016 e 2019.
+As variáveis analisadas foram temperatura, oxigênio dissolvido, pH, condutividade elétrica, clorofila-a e nutrientes (fósforo e nitrogênio).
+Os testes de Interação Espaço-Tempo revelaram que as variáveis físico-químicas não variaram devido à interação entre os pontos e períodos de amostragem, mas diversas variáveis variaram significativamente em função do período de amostragem. O resultado do Índice de Estado Trófico evidenciou que as águas do Corpo Central I foram classificadas como Hipereutróficas, destacando a degradação da qualidade das águas neste compartimento. Os resultados desta pesquisa podem subsidiar os gestores públicos na tentativa de minimizar os efeitos da degradação progressiva da qualidade da água deste reservatório.
+
+**PALAVRAS-CHAVE**: Eutrofização, Rio Pinheiros, Reservatório Urbano.
