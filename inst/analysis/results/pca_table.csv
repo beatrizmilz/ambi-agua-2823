@@ -1,0 +1,15 @@
+group;Variables;PCA1;PCA2;PCA3
+Proportion of variance explained;NA;37,544;19,494;14,717
+Eigenvalues;NA;4,505;2,339;1,766
+Eigenvectors;TN;-0,061;0,507;-0,809
+Eigenvectors;NO2;0,618;-0,617;-0,185
+Eigenvectors;NO3;0,739;0,462;0,355
+Eigenvectors;NH4;0,253;0,339;-0,537
+Eigenvectors;TP;0,549;0,014;-0,656
+Eigenvectors;TDP;0,632;-0,185;0,219
+Eigenvectors;SRP;0,835;0,202;0,228
+Eigenvectors;CHLA;0,267;-0,793;-0,335
+Eigenvectors;water_temperature;-0,527;-0,762;-0,088
+Eigenvectors;dissolved_oxygen;-0,775;0,154;-0,093
+Eigenvectors;electrical_conductivity;0,817;-0,244;-0,019
+Eigenvectors;ph;-0,703;-0,078;0,064

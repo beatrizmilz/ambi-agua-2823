@@ -1,0 +1,251 @@
+---
+title: "PCA"
+output: github_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, dpi = 600)
+```
+
+Referências sobre PCA:
+
+- [PCA no R](http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/#theory-behind-pca-results);
+
+- [função PRCOMP](http://wiki.icmc.usp.br/images/a/ab/Prcomp.pdf);
+
+- [documentação da função prcomp](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/prcomp)
+
+## Sobre a PCA:
+
+  - Os valores abaixo do limite de quantificação e de detecção foram substituídos por 0. Não pode ter dados faltantes (NA) na base.
+  
+  - Feita usando a função `prcomp()` do R base, com o argumento `scale = TRUE` - as variáveis ( _scale: a logical value indicating whether the variables should be scaled to have unit variance before the analysis takes place_ )
+  
+  - As visualizações de PCA foram feitas com o pacote ggplot2. As visualizações da PCA estão ao final da página.
+
+- __Variáveis:__ Sobre a escolha das variáveis:
+
+- __Dados sobre a coleta__:
+
+  - ID - Número de dois dígitos, composto por 1) número da coleta, 2) ponto de coleta. - Usado para nomear as amostras na PCA (não faz parte da PCA em si, apenas da visualização).
+  
+  - sampling_event - data da coleta (mês e ano) (não está na PCA)
+  
+  - sampling_sites - ponto de coleta (1 à 4) - Usado para fazer a visualização por grupos (não faz parte da PCA em si, apenas da visualização).
+  
+  - season - época da coleta: chuvosa ou seca - Usado para fazer a visualização por grupos (não faz parte da PCA em si, apenas da visualização).
+  
+- __Dados coletados in situ__:
+  - euphotic_zone_depth - Profundidade da zona eufótica - não adicionado, dados incompletos (não tem para coletas 5 e 6)
+  - secchi_depth - não adicionado, dados incompletos (não tem para coletas 5 e 6)
+
+- __Dados da sonda__:
+  - water_temperature - temperatura da água - adicionado na PCA. 
+  - dissolved_oxygen - concentração de oxigênio dissolvido - adicionado na PCA. 
+  - saturation_dissolved_oxygen - saturação do OD, não usado na PCA pois não temos amostras para as 6 coletas.
+  - pH - adicionado na PCA. 
+  - electrical_conductivity - condutividade elétrica - adicionado na PCA. 
+  
+- __Dados obtidos em laboratório a partir das amostras__:  
+  - NT, NO2, NO3, NH4 - Nutrientes: série Nitrogênio - Adicionados na PCA
+  - TP, TDP, SRP - Nutrientes: série Fósforo - Adicionados na PCA
+  - CHLA - Clorofila-A - Adicionado na PCA
+  
+- __Dados climáticos obtidos pelo IAG__:
+  - air_temperature - não adicionado na PCA.
+  - precipitation_30days- precipitação acumulada 30 dias anteriores à coleta. - não adicionado na PCA.
+  
+- __Dados calculados__:
+  - tsi_tsr_class - classificação do indice de estado trófico - Não adicionado na PCA
+  - NP_ratio - Razão nitrogênio e fósforo - Não adicionado na PCA
+
+
+
+# Códigos
+## Carregando pacotes
+
+```{r message=FALSE, warning=FALSE}
+library(patchwork) #pacote para juntar os gráficos em uma imagem só
+library(ggplot2)
+devtools::load_all()
+```
+
+## Abrindo e "arrumando" a base de dados
+
+
+```{r}
+dados_pca <- dataset_pca_sti %>% 
+  dplyr::select( 
+    # retirando algumas colunas que não são usadas na PCA
+  -precipitation_30days,
+  -air_temperature,
+  -id,
+  -sampling_event,
+  -sampling_event_num,
+  -season,
+  -sampling_sites,
+  -season_numeric,
+  -tsi_tsr,
+  -tsi_tsr_class ,
+  -NP_ratio,
+  -euphotic_zone_depth,
+  -secchi_depth,
+  -saturation_dissolved_oxygen
+) %>% 
+  as.data.frame()
+
+
+dplyr::glimpse(dados_pca) # dados que ESTÃO na PCA
+```
+
+## Realizando a PCA
+
+```{r echo=TRUE}
+# Verificando se tem NA na base. 
+# Não pode ter NA se não gera erro.
+sum(is.na(dados_pca))
+
+# realiza a Principal Components Analysis
+res.pca <- prcomp(dados_pca, scale = TRUE) 
+
+res.pca %>% broom::tidy()
+
+res.princomp <- princomp(dados_pca, cor = TRUE)
+```
+
+
+
+## PCA
+
+- Biplot (feito pelo Jean): 
+
+```{r}
+biplot(res.pca)
+```
+
+### Autovalores
+
+```{r}
+autovals <- apply(res.pca$x,2,var)
+autovals %>% broom::tidy()
+```
+
+
+### % de explicação de cada eixo
+
+ Critério de Broken-Stick (interpretar somente eixos com autovalores maiores que os gerados pela distribuição de Broken-Stick). Por esse critério, vamos interpretar os 3 primeiros eixos da PCA.
+
+Seleção dos eixos retidos da PCA para interpretação (Jackson, 1993. Ecology)
+
+```{r}
+vegan::bstick(res.pca) %>% broom::tidy()
+
+```
+
+Os PCA1, PCA2 e PCA3 devem ser interpretados porque apresentam autovalores maiores que os gerados pela distribuição de Broken-Stick
+
+- Porcentagem de explicação:
+
+```{r}
+p.exp_PCA <- (autovals/sum(autovals))*100
+p.exp_PCA %>% broom::tidy()
+sum(p.exp_PCA[1:3]) 
+# Os 3 primeiros eixos da PCA representam cerca de 75.45% da variabilidade das variaveis limnologicas
+```
+
+###  Autovetores (loadings)
+```{r}
+autovecs <-
+  cor(data.frame(
+    dados_pca,
+    PCA1 = res.pca$x[, 1],
+    PCA2 = res.pca$x[, 2],
+    PCA3 = res.pca$x[, 3]
+  ))
+
+
+# Exclui as correlacoes entre os eixos da PCA
+autovecs <- autovecs[-c(13:15), 13:15] 
+```
+
+
+```{r}
+colSums(autovecs^2)
+autovals[1:3] # Em uma PCA de correlacao (neste caso), a soma dos autovetores ao quadrado de cada eixo deve ser igual ao autovalor do eixo
+autovecs <- round(autovecs,3)
+```
+
+```{r}
+autovecs %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column(var = "Variables") %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(group = "Eigenvectors") %>%
+  tibble::add_row(
+    group = "Eigenvalues",
+    PCA1 = autovals[1],
+    PCA2 = autovals[2],
+    PCA3 = autovals[3]
+  ) %>%
+  tibble::add_row(
+    group = "Proportion of variance explained",
+    PCA1 = p.exp_PCA[1],
+    PCA2 = p.exp_PCA[2],
+    PCA3 = p.exp_PCA[3]
+  ) %>%
+  dplyr::relocate(group, .before = Variables) %>%
+  dplyr::mutate(group = forcats::fct_relevel(
+    group,
+    c(
+      "Proportion of variance explained" ,
+      "Eigenvalues",
+      "Eigenvectors"
+    )
+  )) %>%
+  dplyr::mutate(dplyr::across(.cols = c(PCA1:PCA3),  ~ round(.x, digits = 3))) %>%
+  dplyr::arrange(group) %>%
+  readr::write_csv2("results/pca_table.csv")
+```
+
+
+## Criando os gráficos da PCA 
+
+```{r}
+dados_ids <- dataset_pca_sti %>%
+  dplyr::select(id:season) %>%
+  dplyr::mutate(seq = 1:24,
+                sampling_sites = forcats::as_factor(sampling_sites)) 
+  
+dados_grafico <- res.pca$x[, 1:3] %>%
+  as.data.frame() %>%
+  tibble::rowid_to_column("seq") %>%
+  dplyr::left_join(dados_ids)
+```
+
+```{r}
+grafico_pca_12 <-
+  generate_pca_plot(dados_grafico, autovecs, pc_x = 1, pc_y = 2)
+grafico_pca_13 <-
+  generate_pca_plot(dados_grafico, autovecs, pc_x = 1, pc_y = 3)
+grafico_pca_23 <-
+  generate_pca_plot(dados_grafico, autovecs, pc_x = 2, pc_y = 3)
+```
+
+```{r, fig.width = 8, fig.height = 7}
+pca_plot <-
+  grafico_pca_12 + grafico_pca_13 + grafico_pca_23 + guide_area() +
+  plot_layout(ncol = 2) +
+  plot_layout(guides = 'collect') +
+  plot_annotation(tag_levels = 'A')
+
+pca_plot
+
+ggsave(
+  pca_plot,
+  filename = "../imagens/pca_biplot.jpg",
+  dpi = 400,
+  width = 8,
+  height = 7)
+```
+
