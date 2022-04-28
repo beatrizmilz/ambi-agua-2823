@@ -385,7 +385,7 @@ pca_plot
 ``` r
 ggsave(
   pca_plot,
-  filename = "../imagens/pca_biplot.jpg",
+  filename = "../images/pca_biplot.jpg",
   dpi = 400,
   width = 8,
   height = 7)

@@ -1,0 +1,192 @@
+---
+title: "STI"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+- Usando as mesmas variáveis da PCA
+
+- https://github.com/r-spatial/sf/issues/1464
+
+### Preparando os dados 
+
+```{r}
+devtools::load_all()
+```
+
+
+```{r}
+data_sti <-
+  dataset_pca_sti %>% dplyr::select( # retira algumas variáveis não necessárias
+    -id,
+    -sampling_event,
+    -season,
+    -tsi_tsr_class,
+    -season_numeric,
+    -euphotic_zone_depth,
+    -secchi_depth,
+    -precipitation_30days,
+    -air_temperature,-tsi_tsr,
+    -NP_ratio,
+    -saturation_dissolved_oxygen
+  ) %>%
+  dplyr::rename("Site" = sampling_sites,
+         "Date" = sampling_event_num) %>%
+  dplyr::relocate(Site, .before = Date)
+
+data_sti_sem_site_data <- data_sti %>% dplyr::select(-Site,-Date)
+```
+
+```{r}
+#log-transform species data (excluding site and time colums)
+
+#JEAN: Aqui, Beatriz, nao transforme o pH porque jah eh medido em escala log
+data_sti_log <-
+  data.frame(log(data_sti_sem_site_data[, -12] + 1), pH = data_sti_sem_site_data$ph)
+
+```
+
+## Multivariada
+
+```{r}
+
+
+# # multivariada ----
+sti_multivariada <- adespatial::stimodels(
+  data_sti_log,
+  #dados transformados com log
+  S = 4,  # quantos pontos de coleta?
+  Ti = 6,  # quantas coletas ao longo do tempo?
+  nperm = 999, # número de permutações
+  model = "5" # qual modelo utilizado
+)
+
+sti_multivariada
+```
+
+
+```{r}
+sti_multivariada_tibble <- tibble::tibble(
+  variavel = character(),
+  fator  = character(),
+  f = double(),
+  p = double(),
+  r2 = double(),
+  r2adj = double()
+) %>%
+  tibble::add_row(
+    variavel = "multivariada",
+    fator = "S*T",
+    f = sti_multivariada$testSTI$F ,
+    p = sti_multivariada$testSTI$Prob ,
+    r2 = sti_multivariada$testSTI$R2,
+    r2adj = sti_multivariada$testSTI$R2.adj
+  ) %>%
+  tibble::add_row(
+    variavel = "multivariada",
+    fator = "S",
+    f = sti_multivariada$testS$F ,
+    p = sti_multivariada$testS$Prob ,
+    r2 = sti_multivariada$testS$R2,
+    r2adj = sti_multivariada$testS$R2.adj
+  ) %>%
+  tibble::add_row(
+    variavel = "multivariada",
+    fator = "T",
+    f = sti_multivariada$testT$F ,
+    p = sti_multivariada$testT$Prob ,
+    r2 = sti_multivariada$testT$R2,
+    r2adj = sti_multivariada$testT$R2.adj
+  ) %>%
+  dplyr::relocate(variavel, fator, r2, f, p , r2adj)
+
+sti_multivariada_tibble
+
+
+sti_multivariada_tibble %>% readr::write_rds("results/sti_multi_tabela_final.Rds")
+```
+
+
+### UNIVARIADA
+
+```{r}
+# univariada ----
+
+calcular_sti_univar <- function(i){
+  sti_uni <- adespatial::stimodels(
+    data_sti_log[, i],
+    S = 4,     # quantos ponto de coleta?
+    Ti = 6,     # quantas coletas ao longo do tempo?
+    nperm = 999, # número de permutações
+    model = "5" # qual modelo utilizado
+  )
+  var <- names(data_sti_log)[i]
+
+
+  tibble::tibble(
+    variavel = character(),
+    fator  = character(),
+    f = double(),
+    p = double(),
+    r2 = double(),
+    r2adj = double()
+  ) %>%
+    tibble::add_row(
+      variavel = var,
+      fator = "S",
+      f = sti_uni$testS$F ,
+      p = sti_uni$testS$Prob ,
+      r2 = sti_uni$testS$R2,
+      r2adj = sti_uni$testS$R2.adj
+    ) %>%
+    tibble::add_row(
+      variavel = var,
+      fator = "T",
+      f = sti_uni$testT$F ,
+      p = sti_uni$testT$Prob ,
+      r2 = sti_uni$testT$R2,
+      r2adj = sti_uni$testT$R2.adj
+    ) %>%
+    tibble::add_row(
+      variavel = var,
+      fator = "S*T",
+      f = sti_uni$testSTI$F ,
+      p = sti_uni$testSTI$Prob ,
+      r2 = sti_uni$testSTI$R2,
+      r2adj = sti_uni$testSTI$R2.adj
+    )
+
+
+}
+
+sti_uni_tibble <- purrr::map_dfr( 1:ncol(data_sti_log), calcular_sti_univar)
+
+sti_uni_tibble %>% readr::write_rds("results/sti_uni_tabela_final.Rds")
+
+
+
+```
+
+
+## Arrumando as tabelas
+
+```{r}
+readr::read_rds("results/sti_uni_tabela_final.Rds") %>%
+  dplyr::mutate(
+    f = round(f, 2),
+    p = round(p, 2),
+    r2 = round(r2, 2),
+    r2adj = round(r2adj, 2)
+  ) %>%
+  # R² ajustados negativos foram truncados em zero
+  dplyr::mutate(
+    r2adj = dplyr::if_else(r2adj < 0, 0, r2adj),
+    significativo = dplyr::if_else(p < 0.05, TRUE, FALSE)
+  ) %>%
+  readr::write_rds("results/sti_uni_tabela_arrumada.Rds")
+
+```
+
