@@ -202,8 +202,6 @@ sti_uni %>%
         "pH"
       )
     ),
-    
-    
   ) %>%
     dplyr::arrange(variavel, fator) %>%
   dplyr::left_join(variable_names, by = c("variavel" = "variable")) %>%
@@ -266,14 +264,11 @@ The first three components from the Principal Component Analysis (PCA) were reta
 
 Samples are more clearly grouped by season than by spatial differences in limnological variables following a combination of PC1 and PC2 (Fig. \@ref(fig:pca)a), and PC2 and PC3 (Fig. \@ref(fig:pca)c). Samples from the dry period tended to present higher NO3, SRP, and lower WT (Fig. \@ref(fig:pca)a). This tendency can be related to lower phytoplankton biomass in this season. Within the rainy season, spatial differences were more evident mainly due to a tendency of increasing values of WT from site 1 to site 4. Furthermore, sampling point P1 also presented a higher variability in limnological variables considering both PC1 and PC2 scores, particularly in the rainy season (Fig. \@ref(fig:pca)a). Seasonal differences were less clear considering PC1 and PC3, but it is possible to infer that in the dry season, samples tended to present higher EC, lower DO and pH (Fig. \@ref(fig:pca)b). Finally, considering both PC2 and PC3, samples also tended to group by sampling season, with samples from the rainy season presenting higher WT and chlorophyll-a than those from the dry season (Fig. \@ref(fig:pca)c). These results probably indicate the influence of temperature and rainfall effects from reservoir adjacent areas favoring the growth of phytoplankton and elevating CHLA levels.
 
-<!-- **Comentário Jean: Fiz uma interpretação da PCA no parágrafo acima segundo a fg. 4 parece que o que importa na separação em limnologia desses locais são mais diferenças sazonais. Acho que deve ir por aí na interpretação.** -->
-
 
 ```{r pca, echo=FALSE, fig.cap="Principal Component Analysis ordination summarizing limnological variables sampled in Billings reservoir from August, 2016 to February, 2019. Source: Elaborated by the authors."}
 knitr::include_graphics("images/pca_biplot.jpg")
 ```
 <br>
-<!-- **Comentário Jean: Geralmente escolhemos um limiar para interpretar as cargas (loadings), p.ex., |0.6| ou |0.8|. Deixei destacado em negrito um limiar de |0.6| (e escrevi nos métodos) se acharem que está muito liberal (se aumentar o limiar, ficam menos variáveis para interpretarmos) alterem aqui.** -->
 
 ```{r table-pca, tab.id = "table-pca"}
 resultados_pca %>%
@@ -354,7 +349,7 @@ Water temperature (WT) tended to be higher in the rainy season than in the dry o
 
 
 ```{r boxplot-geral, echo=FALSE, fig.cap= "Variation of Water temperature, Dissolved oxygen, pH, Electrical conductivity, nutrients, and Chlorophyll-a according to season and sampling point. Each box represents interquartile range, horizontal thick line represents median and whiskers represent minimum and maximum values. Source: Elaborated by the authors.", fig.height=8}
-  knitr::include_graphics("images/boxplot_geral.png")
+knitr::include_graphics("images/boxplot_geral.png")
 ```
 
 
@@ -412,8 +407,7 @@ mean_ec <- stats_unique %>%
 
 
 Electrical conductivity (EC) is the ability of a solution to conduct a given electrical current; it means that the higher ion concentration in the water, the greater its electrical conductivity. EC ranged from `r dplyr::pull(stats_ec_dry, min)` to `r dplyr::pull(stats_ec_dry, max)` µS/cm in the dry season and from `r dplyr::pull(stats_ec_rainy, min)` to `r dplyr::pull(stats_ec_rainy, max)` µS/cm in the rainy season. EC tended to be lower in the rainy season than in the dry one, especially in sampling sites one and two (Figure \@ref(fig:boxplot-geral)). Comparing EC between sampling points, the highest value was obtained for P1 for both seasons. EC results showed higher values during the dry season, and it showed the opposite tendency compared to DO and pH tendencies. 
-<!-- **COMENTÁRIO JEAN: É interessante especular sobre o(s) mecanismo(s) dessa maior condutividade na seca. Isso poderia ser um efeito da menor quantidade de água nesse período ter um menor potencial de diluir as águas com poluentes (águas com maior quantidade de macronutrientes que afetam a condutividade, p.e., Mg, Na, Ca)?** -->
- @wengratSpatialEvaluationWater2011 also obtained higher values in the dry season. @sahaEvaluationSpatiotemporalChanges2021 also observed higher values of EC (183.6 - 428.8 µS/cm) in an Indian tropical reservoir and attributed it to pollution accumulation. In this work we also attribute this highest concentration to pollution accumulation, because in the dry season there is less inlet of rainwater to dilute pollutants. Also, mean values in this study were around `r mean_ec` µS/cm and similar in both seasons.
+@wengratSpatialEvaluationWater2011 also obtained higher values in the dry season. @sahaEvaluationSpatiotemporalChanges2021 also observed higher values of EC (183.6 - 428.8 µS/cm) in an Indian tropical reservoir and attributed it to pollution accumulation. In this work we also attribute this highest concentration to pollution accumulation, because in the dry season there is less inlet of rainwater to dilute pollutants. Also, mean values in this study were around `r mean_ec` µS/cm and similar in both seasons.
 
 
 
@@ -589,16 +583,16 @@ otherwise you can remove it.-->
 ::: {#refs}
 :::
 
-<!-- ## AUTHORS CONTRIBUTION -->
+## AUTHORS CONTRIBUTION
 
-<!-- Beatriz Milz - This article is based on research carried out as part of her Msc dissertation. -->
-<!-- Participated in sample collection and water samples analysis, participated in the data and statistical analysis, wrote the text. -->
+Beatriz Milz - This article is based on research carried out as part of her Msc dissertation.
+Participated in sample collection and water samples analysis, participated in the data and statistical analysis, wrote the text.
 
-<!-- Cristina Souza Freire Nordi - First author supervisor of the dissertation, participated in the collection of the water samples, wrote and reviewed the text. -->
+Cristina Souza Freire Nordi - First author supervisor of the dissertation, participated in the collection of the water samples, wrote and reviewed the text.
 
-<!-- Jean Ortega - participated in the data and statistical analysis, wrote and reviewd the text. -->
+Jean Ortega - participated in the data and statistical analysis, wrote and reviewed the text.
 
-<!-- Patricia Oliveira de Aquino - Participated in sample collection and in the analysis of the water samples. -->
+Patricia Oliveira de Aquino - Participated in sample collection and in the analysis of the water samples.
 
-<!-- Ana Luiza Vietti Bitencourt - First author co-supervisor of the dissertation. -->
+Ana Luiza Vietti Bitencourt - First author co-supervisor of the dissertation.
 
