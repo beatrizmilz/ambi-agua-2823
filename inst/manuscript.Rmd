@@ -32,7 +32,7 @@ This article aims to evaluate water quality of the environmental compartment Cen
 Water sampling was carried out on the surface at four points, in a longitudinal profile, covering two periods (dry and rainy) distributed in six samplings, between 2016 and 2019.
 Analyzed variables included temperature, dissolved oxygen, pH, electrical conductivity, chlorophyll-a and nutrients (phosphorus and nitrogen). Space-Time Interaction tests revealed that physicochemical variables did not vary due to the interaction between sampling periods and points, but several variables varied significantly in function of the sampling period. Result of the Trophic State Index showed that waters of Central Body I were classified as Hypereutrophic, highlighting the degradation of water quality in this compartment. The results of this research can subsidize public managers in an attempt to minimize the effects of progressive degradation of water quality of this reservoir.
 
-**KEYWORDS**: Eutrophication, Pinheiros river, Urban Reservoir.
+**KEYWORDS**: Eutrophication, Pinheiros river, Urban reservoir.
 
 **Variabilidade espaço-temporal da qualidade da água superficial do Corpo Central I da represa Billings - São Paulo, Brasil**
 
