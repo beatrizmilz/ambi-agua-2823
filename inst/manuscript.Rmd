@@ -49,7 +49,7 @@ Os testes de Interação Espaço-Tempo revelaram que as variáveis físico-quím
 
 ## INTRODUCTION
 
-Eutrophication is enrichment by nutrients (mainly nitrogen and phosphorus) in aquatic ecosystems and constitutes a growing global problem [@sinhaEutrophicationWillIncrease2017].  Eutrophication causes a decrease in water quality and prevent its use for human consumption in many cases [@nogueiraEutrofizacaoNoReservatorio2015; @andradeBalancoNitrogenioFosforo2020; @nobrePrecipitationLandscapeProperties2020]. For example, eutrophication increases turbidity and algae biomass, particularly toxin-producing groups (e.g., *Microcystis aeruginosa*).
+Eutrophication is the enrichment by nutrients (mainly nitrogen and phosphorus) in aquatic ecosystems and constitutes a growing global problem [@sinhaEutrophicationWillIncrease2017].  Eutrophication causes a decrease in water quality and prevent its use for human consumption in many cases [@nogueiraEutrofizacaoNoReservatorio2015; @andradeBalancoNitrogenioFosforo2020; @nobrePrecipitationLandscapeProperties2020]. For example, eutrophication increases turbidity and algae biomass, particularly toxin-producing groups (e.g., *Microcystis aeruginosa*).
 
 
 The Metropolitan Region of São Paulo (MRSP) is located in the Southeast region of Brazil, with a population of more than 21.1 million inhabitants, which represents around 50% of the population of the State of São Paulo. The Billings reservoir is the largest reservoir of water in the Metropolitan Region of São Paulo, and has multiple uses, including public supply of water to the population [@rissoAnaliseDesempenhoReservatorio2018]; unfortunately, the low quality of its waters has been compromising its use for public supply.
@@ -81,7 +81,7 @@ knitr::include_graphics("maps/map.png")
 
 ### Analysis
 
-The analysis and visualization of data and statistical analysis were performed using the R software (*https://www.r-project.org/*). R Packages used in this research are available on the Comprehensive R Archive Network (CRAN).
+The analysis and visualization of data and statistical analysis were performed using the R software (*https://www.r-project.org/*) [@R-software]. R Packages used in this research are available on the Comprehensive R Archive Network (CRAN).
 
 #### Quality evaluation of surface waters
 
@@ -89,19 +89,19 @@ Water was sampled on the surface covering four sampling points (P1 to P4) (Figur
 
 Water temperature (WT), dissolved oxygen (DO), pH and electrical conductivity (EC) of water were measured *in situ* using a HACH sensor (model HQ40D).
 Water samples were collected and analyzed for concentration of parameters: Total nitrogen (TN) [@valderramaSimultaneousAnalysisTotal1981], Nitrate (NO3) [@mackereth1978water], Nitrite (NO2) [@mackereth1978water], Ammonium (NH4) [@koroleffDeterminationNutrients1976], total phosphorus (TP) [@valderramaSimultaneousAnalysisTotal1981], total dissolved phosphorus (TDP) [@stricklandManualSeawaterAnalysis1960], Soluble reactive phosphorus (SRP) [@stricklandManualSeawaterAnalysis1960], and Chlorophyll-a (CHLA) [@cetesbNormaTecnicaL52014].
-The Trophic State Index for tropical/subtropical reservoirs (TSI-tsr) was calculated according to @CUNHA2013126. The analysis and visualization of data was performed using the packages adespatial, SciViews, and tidyverse [@tidyverse2019].
+The Trophic State Index for tropical/subtropical reservoirs (TSI-tsr) was calculated according to @CUNHA2013126. The analysis and visualization of data was performed using the packages adespatial [@R-adespatial], SciViews [@R-SciViews], and tidyverse [@tidyverse2019].
 
 
 #### Principal Component Analysis
 
-A principal component analysis (PCA) was performed to summarize the variation of  nutrients (TN, NO2, NO3, NH4, TP, TDP, SRP), chlorophyll-a, and the following measures from water surface: water temperature, pH, dissolved oxygen and electrical conductivity. PCA was conducted with normalized variables and with a correlation matrix [@legendrelegendreNumericalEcology2012]. Axes were retained for interpretation following the Broken-Stick criterion [@jacksonStoppingRulesPrincipal1993]. Variables with loadings higher than |0.6| were considered as relevant for PCA axes ordination. PCA was performed using R software with stats and vegan packages, and visualization of PCA ordinations were made with ggplot2 [@tidyverse2019] and patchwork packages.
+A principal component analysis (PCA) was performed to summarize the variation of  nutrients (TN, NO2, NO3, NH4, TP, TDP, SRP), chlorophyll-a, and the following measures from water surface: water temperature, pH, dissolved oxygen and electrical conductivity. PCA was conducted with normalized variables and with a correlation matrix [@legendrelegendreNumericalEcology2012]. Axes were retained for interpretation following the Broken-Stick criterion [@jacksonStoppingRulesPrincipal1993]. Variables with loadings higher than |0.6| were considered as relevant for PCA axes ordination. PCA was performed using R software [@R-software] with stats and vegan [@R-vegan] packages, and visualization of PCA ordinations were made with ggplot2 [@tidyverse2019] and patchwork packages.
 
 
 #### Space-time interaction analysis
 
 Space-time interaction analysis (STI; Legendre et al., 2010) was used to assess whether there was an interaction between sampling points (space) and sampling periods (time) in the variation of physical, chemical, and biological parameters. This analysis is necessary because sampling in each period was carried out at four sampling points. In this case, testing the interaction between periods and sampling points by a traditional analysis of variance (ANOVA) is not possible due to the absence of replicates to estimate the sum of squares of residuals [@legendre2010]. In STI, a factorial ANOVA model was used with sub-adjusted interaction (model 5 in Legendre et al., 2010). This model allows testing the interaction in the absence of replication, has correct type I error rates and allows the use of univariate or multivariate response variables (Legendre et al., 2010). Therefore, as response matrix in STI, we used a matrix with all 15 physicochemical variables transformed by log10 (x + 1) (except pH) and standardized.
 
-To explore which parameters varied according to sampling points and sampling periods, univariate STIs were performed with each physicochemical variable transformed by log10 (x + 1) (except pH) as response variable. Significance in STI was assessed using 999 permutations. A significance level of 5% was adopted and all analyses were performed in the R software with adespatial package.
+To explore which parameters varied according to sampling points and sampling periods, univariate STIs were performed with each physicochemical variable transformed by log10 (x + 1) (except pH) as response variable. Significance in STI was assessed using 999 permutations. A significance level of 5% was adopted and all analyses were performed in the R software [@R-software] with adespatial [@R-adespatial] package.
 
 
 
@@ -109,7 +109,7 @@ To explore which parameters varied according to sampling points and sampling per
 
 The National Council for the Environment (CONAMA) created the Resolution No. 357 [@nationalenvironmentcouncilRESOLUCAOCONAMANo2005], which classifies water resources and regulates their predominant uses with water quality standards. The classification of water bodies proposed by this resolution presents classes as a set of conditions and standards of water quality necessary to meet the prevailing uses, current or future, and that must be considered as goals to be achieved by public managers.
 
-The Billings reservoir was classified by the State Government of São Paulo as a Class II water body',  destaque_rev2)` [@saopaulostategovernmentDecretoNo101977]. According to the aforementioned resolution, Class II waters can be used for human consumption (after conventional treatment), for protection of aquatic communities, for primary contact recreation, for irrigation of vegetables, fruit plants and parks, gardens, sports fields and leisure, with which the public may have direct contact, aquaculture, and fishing activities',  destaque_rev2)` [@nationalenvironmentcouncilRESOLUCAOCONAMANo2005].
+The Billings reservoir was classified by the State Government of São Paulo as a Class II water body', [@saopaulostategovernmentDecretoNo101977]. According to the aforementioned resolution, Class II waters can be used for human consumption (after conventional treatment), for protection of aquatic communities, for primary contact recreation, for irrigation of vegetables, fruit plants and parks, gardens, sports fields and leisure, with which the public may have direct contact, aquaculture, and fishing activities',  destaque_rev2)` [@nationalenvironmentcouncilRESOLUCAOCONAMANo2005].
 
 The results of this study will be compared with the standards established in the Conama Resolution No. 357 for Class II water bodies, in order to know if the quality standards of the water in the reservoir are in accordance with those established in the Brazilian legislation.
 
@@ -302,7 +302,7 @@ resultados_pca %>%
   flextable::merge_at(i = 1:1, j = 1:2 ) %>% 
   flextable::merge_at(i = 2:2, j = 1:2 ) %>% 
   flextable::set_caption(
-    "Loadings, Eigenvalues and Proportion of explained variance of a Principal Component Analysis (PCA) ordination summarizing limnological variables sampled in Billings reservoir from August, 2016 to February, 2019. Only the axes with eigenvalues higher than those expected by a Broken-Stick distribution are presented. Variables with loadings higher than |0.6| are highlighted in bold."
+    "Loadings, Eigenvalues and Proportion of explained variance of a Principal Component Analysis (PCA) ordination summarizing limnological variables sampled in Billings reservoir from August, 2016 to February, 2019. Only the axes with eigenvalues higher than those expected by a Broken-Stick distribution are presented."
   )
   
 ```
@@ -491,7 +491,7 @@ stats_srp_dry <- stats_srp %>%
 
 ```
 
-Results for Total dissolved phosphorus (TDP) ranged from `r dplyr::pull(stats_tdp_dry, min)` to `r dplyr::pull(stats_tdp_dry, max)` µg/L during the dry season and from  `r dplyr::pull(stats_tdp_rainy, min)` to `r dplyr::pull(stats_tdp_rainy, max)` µg/L during the rainy season. The soluble reactive phosphorus (SRP) fractionor Orthophosphate comprises all types of inorganic phosphorus in solution [@markadTrophicStateModeling2019]. SRP varied seasonally, being higher and more variable in the dry season than the rainy season for all sampling points. SRP results in the dry season ranged from `r dplyr::pull(stats_srp_dry, min)` to `r dplyr::pull(stats_srp_dry, max)` µg/L, and from `r dplyr::pull(stats_srp_rainy, min)` to `r dplyr::pull(stats_srp_rainy, max)` µg/L during the rainy season. As SRP is the main form of phosphorus assimilated by phytoplankton, the lower values obtained in the rainy season can be associated with greater phytoplankton biomass (Chlorophyll-a) obtained in that season.
+Results for Total dissolved phosphorus (TDP) ranged from `r dplyr::pull(stats_tdp_dry, min)` to `r dplyr::pull(stats_tdp_dry, max)` µg/L during the dry season and from  `r dplyr::pull(stats_tdp_rainy, min)` to `r dplyr::pull(stats_tdp_rainy, max)` µg/L during the rainy season. The soluble reactive phosphorus (SRP) fraction or Orthophosphate comprises all types of inorganic phosphorus in solution [@markadTrophicStateModeling2019]. SRP varied seasonally, being higher and more variable in the dry season than the rainy season for all sampling points. SRP results in the dry season ranged from `r dplyr::pull(stats_srp_dry, min)` to `r dplyr::pull(stats_srp_dry, max)` µg/L, and from `r dplyr::pull(stats_srp_rainy, min)` to `r dplyr::pull(stats_srp_rainy, max)` µg/L during the rainy season. As SRP is the main form of phosphorus assimilated by phytoplankton, the lower values obtained in the rainy season can be associated with greater phytoplankton biomass (Chlorophyll-a) obtained in that season.
 
 
 
@@ -565,7 +565,22 @@ This study presents recent data about a water body that is important to the publ
 
 ## ACKNOWLEDGMENTS
 
-The first author thanks the São Paulo Research Foundation (FAPESP) - Grant number XXXX/XXXXX-X. The third author thanks the Coordination for the Improvement of Higher Level Personnel (CAPES) for a postdoctoral scholarship. The last author thanks the  São Paulo Research Foundation (FAPESP) and Basic Sanitation Utility Company of the State of São Paulo (SABESP) - Grant number XXXX/XXXXX-X.
+The first author thanks the São Paulo Research Foundation (FAPESP) - Grant number 	18/23771-6. The third author thanks the Coordination for the Improvement of Higher Level Personnel (CAPES) for a postdoctoral scholarship - Grant Number 88887.374969/2019-00. The last author thanks the  São Paulo Research Foundation (FAPESP) and Basic Sanitation Utility Company of the State of São Paulo (SABESP) - Grant number PITE-SABESP 2010/50738-8.
+
+
+## AUTHORS CONTRIBUTION
+
+Beatriz Milz - This article is based on research carried out as part of her Msc dissertation.
+Participated in sample collection and water samples analysis, participated in the data and statistical analysis, wrote the text.
+
+Cristina Souza Freire Nordi - First author supervisor of the dissertation, participated in the collection of the water samples, wrote and reviewed the text.
+
+Jean Ortega - participated in the data and statistical analysis, wrote and reviewed the text.
+
+Patricia Oliveira de Aquino - Participated in sample collection and in the analysis of the water samples.
+
+Ana Luiza Vietti Bitencourt - First author co-supervisor of the dissertation.
+
 
 ## REFERENCES
 
@@ -583,16 +598,4 @@ otherwise you can remove it.-->
 ::: {#refs}
 :::
 
-## AUTHORS CONTRIBUTION
-
-Beatriz Milz - This article is based on research carried out as part of her Msc dissertation.
-Participated in sample collection and water samples analysis, participated in the data and statistical analysis, wrote the text.
-
-Cristina Souza Freire Nordi - First author supervisor of the dissertation, participated in the collection of the water samples, wrote and reviewed the text.
-
-Jean Ortega - participated in the data and statistical analysis, wrote and reviewed the text.
-
-Patricia Oliveira de Aquino - Participated in sample collection and in the analysis of the water samples.
-
-Ana Luiza Vietti Bitencourt - First author co-supervisor of the dissertation.
 
