@@ -3,7 +3,7 @@
 
 # AMBIAGUA-2021-2823
 
-In this repository, the code for the manuscript is available.
+In this repository, the code for the manuscript is available: http://www.ambi-agua.net/seer/index.php/ambi-agua/article/view/2402
 
 ## Spatio-temporal variability of water quality in Billings Reservoir Central Body - São Paulo, Brazil
 
